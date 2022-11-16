@@ -1,0 +1,53 @@
+<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:pdf="http://ns.adobe.com/pdf/1.3/" rdf:about="">
+            <pdf:Producer>Bundesagentur für Arbeit</pdf:Producer>
+        </rdf:Description>
+        <rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="">
+            <xmp:CreateDate>2022-11-12T11:24:16+01:00</xmp:CreateDate>
+        </rdf:Description>
+        <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:about="">
+            <dc:title>
+                <rdf:Alt>
+                    <rdf:li xml:lang="x-default">UNTITLED</rdf:li>
+                </rdf:Alt>
+            </dc:title>
+            <dc:creator>
+                <rdf:Seq>
+                    <rdf:li>Bundesagentur für Arbeit</rdf:li>
+                </rdf:Seq>
+            </dc:creator>
+        </rdf:Description>
+        <rdf:Description xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/" rdf:about="">
+            <pdfaid:conformance>A</pdfaid:conformance>
+            <pdfaid:part>1</pdfaid:part>
+        </rdf:Description>
+        <rdf:Description xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/"
+                         xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+                         xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#"
+                         xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" rdf:about="">
+            <pdfaExtension:schemas>
+                <rdf:Bag>
+                    <rdf:li rdf:parseType="Resource">
+                        <pdfaSchema:schema>PDF/UA Universal Accessibility Schema</pdfaSchema:schema>
+                        <pdfaSchema:namespaceURI>http://www.aiim.org/pdfua/ns/id/</pdfaSchema:namespaceURI>
+                        <pdfaSchema:prefix>pdfuaid</pdfaSchema:prefix>
+                        <pdfaSchema:property>
+                            <rdf:Seq>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:name>part</pdfaProperty:name>
+                                    <pdfaProperty:valueType>Integer</pdfaProperty:valueType>
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Indicates, which part of ISO 14289 standard is followed
+                                    </pdfaProperty:description>
+                                </rdf:li>
+                            </rdf:Seq>
+                        </pdfaSchema:property>
+                    </rdf:li>
+                </rdf:Bag>
+            </pdfaExtension:schemas>
+            <pdfuaid:part>1</pdfuaid:part>
+        </rdf:Description>
+    </rdf:RDF>
+</x:xmpmeta><?xpacket end="w"?>
