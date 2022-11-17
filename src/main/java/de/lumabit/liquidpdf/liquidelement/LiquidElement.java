@@ -1,13 +1,13 @@
 package de.lumabit.liquidpdf.liquidelement;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDObjectReference;
 import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureElement;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 public class LiquidElement {

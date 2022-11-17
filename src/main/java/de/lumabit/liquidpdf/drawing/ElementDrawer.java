@@ -1,19 +1,19 @@
 package de.lumabit.liquidpdf.drawing;
 
+import de.lumabit.liquidpdf.annotation.LiquidDrawerReference;
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
-import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
 import de.lumabit.liquidpdf.liquidelement.LiquidElement;
 import de.lumabit.liquidpdf.setting.Font;
-import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.COSObjectable;
-import org.apache.pdfbox.pdmodel.common.PDNumberTreeNode;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.*;
+import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDAttributeObject;
+import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDObjectReference;
+import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureElement;
+import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.Revisions;
 import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDMarkedContent;
 import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDPropertyList;
 import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.PDLayoutAttributeObject;
@@ -26,20 +26,25 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDBorderStyleDictionary;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ElementDrawer {
 
     protected PDPageContentStream contentStream;
 
 
-    public PDDocument draw(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
+    public <T extends LiquidElement> PDDocument draw(PDDocument pdDocument, PDPage pdPage, T liquidElement) {
+        try {
+            LiquidDrawerReference elementDrawerClazz = liquidElement.getClass().getAnnotation(LiquidDrawerReference.class);
+            ElementDrawer elementDrawer = (ElementDrawer) elementDrawerClazz.drawer().getDeclaredConstructor().newInstance();
+            elementDrawer.drawElement(pdDocument, pdPage, liquidElement);
+        } catch (Exception e) {
 
-        // TODO: Testcode zum hinzufügen von Links
-        drawLink(pdDocument, pdPage, liquidElement);
-//        drawText(pdDocument, pdPage, liquidElement);
+        }
         return pdDocument;
+    }
+
+    protected <T extends LiquidElement> PDDocument drawElement(PDDocument pdDocument, PDPage pdPage, T liquidElement) {
+        throw new LiquidPdfException("Die Funktion drawElement wurde nicht implementiert");
     }
 
     public PDDocument drawLink(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
@@ -103,7 +108,6 @@ public class ElementDrawer {
         rect.setLowerLeftY(startY - 1);
         rect.setUpperRightX(startX + textWidth);
         rect.setUpperRightY(startY + lineHeight + 2);
-
 
 
         PDAnnotationLink pdAnnotationLink = new PDAnnotationLink();

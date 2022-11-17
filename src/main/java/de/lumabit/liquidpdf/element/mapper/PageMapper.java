@@ -1,4 +1,4 @@
-package de.lumabit.liquidpdf.liquidelement.liquidmapper;
+package de.lumabit.liquidpdf.element.mapper;
 
 import de.lumabit.liquidpdf.element.Page;
 import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
@@ -20,7 +20,7 @@ public class PageMapper {
                 .height(page.getHeight())
                 .width(page.getWidth())
                 .build();
-        liquidPage.setLiquidElements(ElementMapper.mapElements(page.getElements(), liquidPage));
+        liquidPage.setLiquidElements(new ElementMapper().map(liquidPage, page.getElements()));
         return liquidPage;
     }
 }

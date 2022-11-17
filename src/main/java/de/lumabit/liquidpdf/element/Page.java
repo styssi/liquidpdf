@@ -24,12 +24,12 @@ public class Page {
     public static class PageBuilder {
         List<Element> elements = new LinkedList<>();
 
-        public PageBuilder addElement(final Element element) {
+        public <T extends Element> PageBuilder addElement(final T element) {
             this.elements.add(element);
             return this;
         }
 
-        public PageBuilder addElements(final List<Element> elements) {
+        public <T extends Element> PageBuilder addElements(final List<T> elements) {
             this.elements.addAll(elements);
             return this;
         }

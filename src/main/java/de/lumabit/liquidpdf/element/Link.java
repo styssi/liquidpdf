@@ -5,6 +5,6 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
-public class Element {
-    private String text;
+public class Link extends Element {
+    private String href;
 }

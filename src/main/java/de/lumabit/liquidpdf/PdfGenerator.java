@@ -2,7 +2,7 @@ package de.lumabit.liquidpdf;
 
 import de.lumabit.liquidpdf.drawing.DocumentDrawer;
 import de.lumabit.liquidpdf.element.Document;
-import de.lumabit.liquidpdf.liquidelement.liquidmapper.DocumentMapper;
+import de.lumabit.liquidpdf.element.mapper.DocumentMapper;
 import de.lumabit.liquidpdf.validation.DocumentValidator;
 import lombok.Builder;
 

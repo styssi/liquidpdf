@@ -1,7 +1,7 @@
 package de.lumabit.liquidpdf;
 
 import de.lumabit.liquidpdf.element.Document;
-import de.lumabit.liquidpdf.element.Element;
+import de.lumabit.liquidpdf.element.P;
 import de.lumabit.liquidpdf.element.Page;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,12 +19,12 @@ public class Main {
         InputStream inputStream = PdfGenerator.builder()
                 .document(Document.builder()
                         .addPage(Page.builder()
-                                .addElement(Element.builder()
+                                .addElement(P.builder()
                                         .text("Hallo irgendwann getrennt werden muss.")
                                         .build())
-//                                .addElement(Element.builder()
-//                                        .text("Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss. Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss. Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss.")
-//                                        .build())
+                                .addElement(P.builder()
+                                        .text("Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss. Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss. Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss.")
+                                        .build())
                                 .build())
 //                        .addPage(Page.builder()
 //                                .addElement(Element.builder()

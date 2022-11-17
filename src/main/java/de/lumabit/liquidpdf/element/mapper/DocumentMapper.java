@@ -1,4 +1,4 @@
-package de.lumabit.liquidpdf.liquidelement.liquidmapper;
+package de.lumabit.liquidpdf.element.mapper;
 
 import de.lumabit.liquidpdf.element.Document;
 import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
