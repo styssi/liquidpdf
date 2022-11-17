@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PageLayout;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.PDNumberTreeNode;
 import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDMarkInfo;
@@ -272,17 +273,22 @@ public class DocumentDrawer {
     }
 
     private PDNumberTreeNode generateParentTree(LiquidDocument liquidDocument) {
-        COSArray array = new COSArray();
+        COSArray structElemems = new COSArray();
+        Map<Integer, COSObjectable> numbers = new HashMap<>();
+
         liquidDocument.getLiquidPages().forEach(p -> {
             p.getLiquidElements().forEach(e -> {
                 if (e.getPdStructureElement() != null) {
-                    array.add(e.getPdStructureElement());
+                    structElemems.add(e.getPdStructureElement());
+                }
+                if (e.getPdObjectReference() != null) {
+                    // TODO: Make generic
+                    numbers.put(1, e.getPdStructureElement());
                 }
             });
         });
 
-        Map<Integer, COSArray> numbers = new HashMap<>();
-        numbers.put(0, array);
+        numbers.put(0, structElemems);
 
         PDNumberTreeNode parentTree = new PDNumberTreeNode(PDParentTreeValue.class);
         parentTree.setNumbers(numbers);
@@ -290,7 +296,8 @@ public class DocumentDrawer {
     }
 
     private PDDocument enrichTypeStructTreeRoot(PDDocument pdDocument, PDNumberTreeNode parentTree) {
-        pdDocument.getDocumentCatalog().getStructureTreeRoot().setParentTreeNextKey(1);
+        // TODO: Generisch setzen
+        pdDocument.getDocumentCatalog().getStructureTreeRoot().setParentTreeNextKey(2);
         pdDocument.getDocumentCatalog().getStructureTreeRoot().setParentTree(parentTree);
         return pdDocument;
     }

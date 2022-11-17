@@ -1,19 +1,33 @@
 package de.lumabit.liquidpdf.drawing;
 
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
+import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
 import de.lumabit.liquidpdf.liquidelement.LiquidElement;
 import de.lumabit.liquidpdf.setting.Font;
+import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureElement;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
+import org.apache.pdfbox.pdmodel.common.PDNumberTreeNode;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.*;
 import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDMarkedContent;
 import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDPropertyList;
+import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.PDLayoutAttributeObject;
 import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.StandardStructureTypes;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
+import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDBorderStyleDictionary;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ElementDrawer {
 
@@ -23,8 +37,102 @@ public class ElementDrawer {
     public PDDocument draw(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
 
         // TODO: Testcode zum hinzufügen von Links
-        drawText(pdDocument, pdPage, liquidElement);
+        drawLink(pdDocument, pdPage, liquidElement);
+//        drawText(pdDocument, pdPage, liquidElement);
         return pdDocument;
+    }
+
+    public PDDocument drawLink(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
+        try {
+            // Neues Structure Element erstellen und dem Parent hinzufügen
+            PDStructureElement parentStructureElement = liquidElement.getLiquidDocument().getPdStructureElement();
+            PDStructureElement pdStructureElement = new PDStructureElement(StandardStructureTypes.LINK, parentStructureElement);
+            pdStructureElement.setPage(pdPage);
+            parentStructureElement.appendKid(pdStructureElement);
+
+            // Text mit Markierung erstellen und dem gerade erstellen Structure Element als Kind anhängen
+            COSDictionary markedContentDictionary = new COSDictionary();
+            markedContentDictionary.setInt(COSName.MCID, liquidElement.getGlobalMCID());
+            markedContentDictionary.setItem(COSName.PG, pdPage.getCOSObject());
+            markedContentDictionary.setItem(COSName.P, parentStructureElement.getCOSObject());
+            contentStream = new PDPageContentStream(pdDocument, pdPage, PDPageContentStream.AppendMode.APPEND, false);
+            contentStream.beginMarkedContent(COSName.P, PDPropertyList.create(markedContentDictionary));
+            contentStream.beginText();
+            contentStream.newLineAtOffset(50, 50);
+            contentStream.setFont(EmbeddedFont.fonts.get(Font.ROBOTO_REGULAR), 10);
+//            contentStream.setNonStrokingColor(getCurrentTextColor(textFragment));
+            contentStream.showText(liquidElement.getText());
+            contentStream.endText();
+            contentStream.endMarkedContent();
+            contentStream.close();
+            pdStructureElement.appendKid(new PDMarkedContent(COSName.P, markedContentDictionary));
+
+            // pdStructureElement wird hier gesetzt, damit es am Ende dem PDF ParentTree hinzugefügt werden kann
+            liquidElement.setPdStructureElement(pdStructureElement);
+
+            liquidElement.increaseGlobalMCID();
+
+
+            PDAnnotationLink pdAnnotationLink = createPdAnnotationLink(pdPage, 50, 50, 400, 100, "https://www.google.de");
+            pdPage.getAnnotations().add(pdAnnotationLink);
+
+            PDObjectReference pdObjectReference = new PDObjectReference();
+            pdObjectReference.setReferencedObject(pdAnnotationLink);
+
+            liquidElement.setPdObjectReference(pdObjectReference);
+            pdStructureElement.appendKid(pdObjectReference);
+
+            PDLayoutAttributeObject pdLayoutAttributeObject = new PDLayoutAttributeObject();
+            pdLayoutAttributeObject.setPlacement(PDLayoutAttributeObject.PLACEMENT_BLOCK);
+
+
+            Revisions<PDAttributeObject> revisions = new Revisions();
+            revisions.addObject(pdLayoutAttributeObject, 0);
+
+            pdStructureElement.setAttributes(revisions);
+
+            return pdDocument;
+        } catch (IOException e) {
+            throw new LiquidPdfException("SOS", e);
+        }
+    }
+
+    private PDAnnotationLink createPdAnnotationLink(PDPage pdPage, float startX, float startY, int textWidth, int lineHeight, String uri) throws IOException {
+        PDRectangle rect = new PDRectangle();
+        rect.setLowerLeftX(startX);
+        rect.setLowerLeftY(startY - 1);
+        rect.setUpperRightX(startX + textWidth);
+        rect.setUpperRightY(startY + lineHeight + 2);
+
+
+
+        PDAnnotationLink pdAnnotationLink = new PDAnnotationLink();
+        // Border color
+        final Color color = Color.black;
+        final float[] components = new float[]{color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f};
+        pdAnnotationLink.setColor(new PDColor(components, PDDeviceRGB.INSTANCE));
+
+        // border style
+        final PDBorderStyleDictionary linkBorder = new PDBorderStyleDictionary();
+        linkBorder.setStyle(PDBorderStyleDictionary.STYLE_UNDERLINE);
+        linkBorder.setWidth(1);
+        pdAnnotationLink.setBorderStyle(linkBorder);
+
+        PDActionURI action = new PDActionURI();
+        action.setURI(uri);
+        pdAnnotationLink.setAction(action);
+        pdAnnotationLink.setRectangle(rect);
+        pdAnnotationLink.setPage(pdPage);
+
+        pdAnnotationLink.setHidden(false);
+        pdAnnotationLink.setInvisible(false);
+        pdAnnotationLink.setNoView(false);
+        pdAnnotationLink.setPrinted(true);
+        pdAnnotationLink.setContents("Link 2");
+
+        pdAnnotationLink.setStructParent(1);
+
+        return pdAnnotationLink;
     }
 
     public PDDocument drawText(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
