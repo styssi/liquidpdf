@@ -1,6 +1,7 @@
 package de.lumabit.liquidpdf;
 
 import de.lumabit.liquidpdf.element.Document;
+import de.lumabit.liquidpdf.element.Link;
 import de.lumabit.liquidpdf.element.P;
 import de.lumabit.liquidpdf.element.Page;
 import org.apache.commons.logging.Log;
@@ -22,8 +23,9 @@ public class Main {
                                 .addElement(P.builder()
                                         .text("Hallo irgendwann getrennt werden muss.")
                                         .build())
-                                .addElement(P.builder()
+                                .addElement(Link.builder()
                                         .text("Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss. Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss. Hallo das ist ein ganz langer Text, der irgendwann getrennt werden muss.")
+                                        .href("https://www.web.de")
                                         .build())
                                 .build())
 //                        .addPage(Page.builder()

@@ -7,7 +7,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 public class PDrawer extends ElementDrawer {
 
     @Override
-    public PDDocument drawElement(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
+    public <T extends LiquidElement> PDDocument drawElement(PDDocument pdDocument, PDPage pdPage, T liquidElement) {
         return super.drawText(pdDocument, pdPage, liquidElement);
     }
 }

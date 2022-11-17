@@ -3,6 +3,7 @@ package de.lumabit.liquidpdf.drawing;
 import de.lumabit.liquidpdf.annotation.LiquidDrawerReference;
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
 import de.lumabit.liquidpdf.liquidelement.LiquidElement;
+import de.lumabit.liquidpdf.liquidelement.LiquidLink;
 import de.lumabit.liquidpdf.setting.Font;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -47,17 +48,19 @@ public class ElementDrawer {
         throw new LiquidPdfException("Die Funktion drawElement wurde nicht implementiert");
     }
 
-    public PDDocument drawLink(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
+    public <T extends LiquidElement> PDDocument drawLink(PDDocument pdDocument, PDPage pdPage, T liquidElement) {
         try {
+            LiquidLink liquidLinkElement = (LiquidLink) liquidElement;
+
             // Neues Structure Element erstellen und dem Parent hinzufügen
-            PDStructureElement parentStructureElement = liquidElement.getLiquidDocument().getPdStructureElement();
+            PDStructureElement parentStructureElement = liquidLinkElement.getLiquidDocument().getPdStructureElement();
             PDStructureElement pdStructureElement = new PDStructureElement(StandardStructureTypes.LINK, parentStructureElement);
             pdStructureElement.setPage(pdPage);
             parentStructureElement.appendKid(pdStructureElement);
 
             // Text mit Markierung erstellen und dem gerade erstellen Structure Element als Kind anhängen
             COSDictionary markedContentDictionary = new COSDictionary();
-            markedContentDictionary.setInt(COSName.MCID, liquidElement.getGlobalMCID());
+            markedContentDictionary.setInt(COSName.MCID, liquidLinkElement.getGlobalMCID());
             markedContentDictionary.setItem(COSName.PG, pdPage.getCOSObject());
             markedContentDictionary.setItem(COSName.P, parentStructureElement.getCOSObject());
             contentStream = new PDPageContentStream(pdDocument, pdPage, PDPageContentStream.AppendMode.APPEND, false);
@@ -66,25 +69,25 @@ public class ElementDrawer {
             contentStream.newLineAtOffset(50, 50);
             contentStream.setFont(EmbeddedFont.fonts.get(Font.ROBOTO_REGULAR), 10);
 //            contentStream.setNonStrokingColor(getCurrentTextColor(textFragment));
-            contentStream.showText(liquidElement.getText());
+            contentStream.showText(liquidLinkElement.getText());
             contentStream.endText();
             contentStream.endMarkedContent();
             contentStream.close();
             pdStructureElement.appendKid(new PDMarkedContent(COSName.P, markedContentDictionary));
 
             // pdStructureElement wird hier gesetzt, damit es am Ende dem PDF ParentTree hinzugefügt werden kann
-            liquidElement.setPdStructureElement(pdStructureElement);
+            liquidLinkElement.setPdStructureElement(pdStructureElement);
 
-            liquidElement.increaseGlobalMCID();
+            liquidLinkElement.increaseGlobalMCID();
 
 
-            PDAnnotationLink pdAnnotationLink = createPdAnnotationLink(pdPage, 50, 50, 400, 100, "https://www.google.de");
+            PDAnnotationLink pdAnnotationLink = createPdAnnotationLink(pdPage, liquidLinkElement, 50, 50, 400, 100, liquidLinkElement.getHref());
             pdPage.getAnnotations().add(pdAnnotationLink);
 
             PDObjectReference pdObjectReference = new PDObjectReference();
             pdObjectReference.setReferencedObject(pdAnnotationLink);
 
-            liquidElement.setPdObjectReference(pdObjectReference);
+            liquidLinkElement.setPdObjectReference(pdObjectReference);
             pdStructureElement.appendKid(pdObjectReference);
 
             PDLayoutAttributeObject pdLayoutAttributeObject = new PDLayoutAttributeObject();
@@ -102,7 +105,7 @@ public class ElementDrawer {
         }
     }
 
-    private PDAnnotationLink createPdAnnotationLink(PDPage pdPage, float startX, float startY, int textWidth, int lineHeight, String uri) throws IOException {
+    private PDAnnotationLink createPdAnnotationLink(PDPage pdPage, LiquidLink liquidLink, float startX, float startY, int textWidth, int lineHeight, String uri) throws IOException {
         PDRectangle rect = new PDRectangle();
         rect.setLowerLeftX(startX);
         rect.setLowerLeftY(startY - 1);
@@ -123,7 +126,7 @@ public class ElementDrawer {
         pdAnnotationLink.setBorderStyle(linkBorder);
 
         PDActionURI action = new PDActionURI();
-        action.setURI(uri);
+        action.setURI(liquidLink.getHref());
         pdAnnotationLink.setAction(action);
         pdAnnotationLink.setRectangle(rect);
         pdAnnotationLink.setPage(pdPage);
@@ -139,7 +142,7 @@ public class ElementDrawer {
         return pdAnnotationLink;
     }
 
-    public PDDocument drawText(PDDocument pdDocument, PDPage pdPage, LiquidElement liquidElement) {
+    public <T extends LiquidElement> PDDocument drawText(PDDocument pdDocument, PDPage pdPage, T liquidElement) {
         try {
             // Neues Structure Element erstellen und dem Parent hinzufügen
             PDStructureElement parentStructureElement = liquidElement.getLiquidDocument().getPdStructureElement();
