@@ -1,8 +1,8 @@
-package de.lumabit.liquidpdf.drawing;
+package de.lumabit.liquidpdf.drawer;
 
-import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
-import de.lumabit.liquidpdf.liquidelement.LiquidElement;
-import de.lumabit.liquidpdf.liquidelement.LiquidPage;
+import de.lumabit.liquidpdf.model.LiquidDocument;
+import de.lumabit.liquidpdf.model.LiquidElement;
+import de.lumabit.liquidpdf.model.LiquidPage;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSInteger;
 import org.apache.pdfbox.cos.COSName;

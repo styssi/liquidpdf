@@ -1,7 +1,7 @@
-package de.lumabit.liquidpdf.liquidelement;
+package de.lumabit.liquidpdf.model;
 
 import de.lumabit.liquidpdf.annotation.LiquidDrawerReference;
-import de.lumabit.liquidpdf.drawing.PDrawer;
+import de.lumabit.liquidpdf.drawer.PDrawer;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder

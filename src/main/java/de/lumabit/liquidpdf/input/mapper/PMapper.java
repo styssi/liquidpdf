@@ -1,9 +1,9 @@
-package de.lumabit.liquidpdf.element.mapper;
+package de.lumabit.liquidpdf.input.mapper;
 
-import de.lumabit.liquidpdf.element.Element;
-import de.lumabit.liquidpdf.liquidelement.LiquidElement;
-import de.lumabit.liquidpdf.liquidelement.LiquidP;
-import de.lumabit.liquidpdf.liquidelement.LiquidPage;
+import de.lumabit.liquidpdf.input.Element;
+import de.lumabit.liquidpdf.model.LiquidElement;
+import de.lumabit.liquidpdf.model.LiquidP;
+import de.lumabit.liquidpdf.model.LiquidPage;
 
 public class PMapper extends ElementMapper {
 

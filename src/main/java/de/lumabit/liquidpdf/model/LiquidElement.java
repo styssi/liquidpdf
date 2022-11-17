@@ -1,4 +1,4 @@
-package de.lumabit.liquidpdf.liquidelement;
+package de.lumabit.liquidpdf.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,9 @@
 package de.lumabit.liquidpdf;
 
-import de.lumabit.liquidpdf.element.Document;
-import de.lumabit.liquidpdf.element.Link;
-import de.lumabit.liquidpdf.element.P;
-import de.lumabit.liquidpdf.element.Page;
+import de.lumabit.liquidpdf.input.Document;
+import de.lumabit.liquidpdf.input.Link;
+import de.lumabit.liquidpdf.input.P;
+import de.lumabit.liquidpdf.input.Page;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

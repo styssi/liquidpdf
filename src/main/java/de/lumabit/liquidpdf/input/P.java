@@ -1,7 +1,7 @@
-package de.lumabit.liquidpdf.element;
+package de.lumabit.liquidpdf.input;
 
 import de.lumabit.liquidpdf.annotation.LiquidMapperReference;
-import de.lumabit.liquidpdf.element.mapper.PMapper;
+import de.lumabit.liquidpdf.input.mapper.PMapper;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder

@@ -1,11 +1,12 @@
-package de.lumabit.liquidpdf.validation;
+package de.lumabit.liquidpdf.input.validation;
 
-import de.lumabit.liquidpdf.element.Document;
+import de.lumabit.liquidpdf.input.Document;
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
 
 public class DocumentValidator {
     /**
      * is the document structure build up in a valid way
+     *
      * @param document
      */
     public static void validate(Document document) {

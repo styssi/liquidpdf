@@ -1,8 +1,8 @@
-package de.lumabit.liquidpdf.element.mapper;
+package de.lumabit.liquidpdf.input.mapper;
 
-import de.lumabit.liquidpdf.element.Page;
-import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
-import de.lumabit.liquidpdf.liquidelement.LiquidPage;
+import de.lumabit.liquidpdf.input.Page;
+import de.lumabit.liquidpdf.model.LiquidDocument;
+import de.lumabit.liquidpdf.model.LiquidPage;
 
 import java.util.ArrayList;
 import java.util.List;

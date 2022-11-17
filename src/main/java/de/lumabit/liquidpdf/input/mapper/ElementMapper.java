@@ -1,10 +1,10 @@
-package de.lumabit.liquidpdf.element.mapper;
+package de.lumabit.liquidpdf.input.mapper;
 
 import de.lumabit.liquidpdf.annotation.LiquidMapperReference;
-import de.lumabit.liquidpdf.element.Element;
+import de.lumabit.liquidpdf.input.Element;
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
-import de.lumabit.liquidpdf.liquidelement.LiquidElement;
-import de.lumabit.liquidpdf.liquidelement.LiquidPage;
+import de.lumabit.liquidpdf.model.LiquidElement;
+import de.lumabit.liquidpdf.model.LiquidPage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

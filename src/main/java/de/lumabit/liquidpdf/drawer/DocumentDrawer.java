@@ -1,9 +1,9 @@
-package de.lumabit.liquidpdf.drawing;
+package de.lumabit.liquidpdf.drawer;
 
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
-import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
-import de.lumabit.liquidpdf.liquidelement.LiquidPage;
-import de.lumabit.liquidpdf.setting.Font;
+import de.lumabit.liquidpdf.model.LiquidDocument;
+import de.lumabit.liquidpdf.model.LiquidPage;
+import de.lumabit.liquidpdf.input.Font;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDDocument;

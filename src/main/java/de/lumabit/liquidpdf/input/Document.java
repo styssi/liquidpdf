@@ -1,4 +1,4 @@
-package de.lumabit.liquidpdf.element;
+package de.lumabit.liquidpdf.input;
 
 import lombok.Builder;
 import lombok.Getter;

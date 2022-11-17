@@ -1,6 +1,6 @@
-package de.lumabit.liquidpdf.drawing;
+package de.lumabit.liquidpdf.drawer;
 
-import de.lumabit.liquidpdf.liquidelement.LiquidElement;
+import de.lumabit.liquidpdf.model.LiquidElement;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 

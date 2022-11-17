@@ -1,6 +1,6 @@
-package de.lumabit.liquidpdf.validation;
+package de.lumabit.liquidpdf.input.validation;
 
-import de.lumabit.liquidpdf.element.Page;
+import de.lumabit.liquidpdf.input.Page;
 
 import java.util.List;
 

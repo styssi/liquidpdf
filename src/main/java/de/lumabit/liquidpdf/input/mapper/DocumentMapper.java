@@ -1,7 +1,7 @@
-package de.lumabit.liquidpdf.element.mapper;
+package de.lumabit.liquidpdf.input.mapper;
 
-import de.lumabit.liquidpdf.element.Document;
-import de.lumabit.liquidpdf.liquidelement.LiquidDocument;
+import de.lumabit.liquidpdf.input.Document;
+import de.lumabit.liquidpdf.model.LiquidDocument;
 
 import java.util.Calendar;
 

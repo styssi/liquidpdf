@@ -1,7 +1,7 @@
-package de.lumabit.liquidpdf.validation;
+package de.lumabit.liquidpdf.input.validation;
 
-import de.lumabit.liquidpdf.element.Element;
-import de.lumabit.liquidpdf.element.Link;
+import de.lumabit.liquidpdf.input.Element;
+import de.lumabit.liquidpdf.input.Link;
 import de.lumabit.liquidpdf.exception.LiquidPdfException;
 
 public class LinkValidator {

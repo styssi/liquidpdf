@@ -1,9 +1,9 @@
 package de.lumabit.liquidpdf;
 
-import de.lumabit.liquidpdf.drawing.DocumentDrawer;
-import de.lumabit.liquidpdf.element.Document;
-import de.lumabit.liquidpdf.element.mapper.DocumentMapper;
-import de.lumabit.liquidpdf.validation.DocumentValidator;
+import de.lumabit.liquidpdf.drawer.DocumentDrawer;
+import de.lumabit.liquidpdf.input.Document;
+import de.lumabit.liquidpdf.input.mapper.DocumentMapper;
+import de.lumabit.liquidpdf.input.validation.DocumentValidator;
 import lombok.Builder;
 
 import java.io.InputStream;
